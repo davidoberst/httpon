@@ -4,10 +4,9 @@ import argparse
 import pyfiglet
 print("")
 print("")
+
 print(pyfiglet.figlet_format(text="dominic",font="smblock"),end="")
-print("")
-print("https://github.com/davidoberst",end="")
-print("\n" + "-"*60 + "\n")
+print("domain status check")
 
 
 parser = argparse.ArgumentParser()
@@ -20,6 +19,9 @@ if not os.path.exists(args.domain):
     exit()
 
 with open(args.domain, "r") as domains:
+    print("="*50)
+    print("[:] Requesting domains...")
+    print("="*50)
     for line in domains:
         url = line.strip()
         if not url: continue 
@@ -29,8 +31,10 @@ with open(args.domain, "r") as domains:
         
         try:
             response = requests.get(url, timeout=5)
-            print(f"\n--- {url} ---")
+            print(f"\n{url}")
             print(f"STATUS CODE : {response.status_code}")
+           
+
             
             try:
                 print("CONTENT (JSON):")
