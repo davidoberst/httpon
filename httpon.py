@@ -2,21 +2,21 @@ import requests
 import os
 import argparse
 import pyfiglet
-
-# ---------------BANNER---------------------
-print(pyfiglet.figlet_format(text="httpon",font="larry3d"),end="")
 print("")
-print("           https://github.com/davidoberst",end="")
+print("")
+print(pyfiglet.figlet_format(text="dominic",font="smblock"),end="")
+print("")
+print("https://github.com/davidoberst",end="")
 print("\n" + "-"*60 + "\n")
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-d", "--domain", required=True, help="Ruta de la wordlist") 
+parser.add_argument("-d", "--domain", required=True, help="wordlist path") 
 args = parser.parse_args()
 
 
 if not os.path.exists(args.domain):
-    print(f"[!] file '{args.domain}' not founded")
+    print(f"[!] '{args.domain}' no fue encontrado.")
     exit()
 
 with open(args.domain, "r") as domains:
@@ -31,6 +31,7 @@ with open(args.domain, "r") as domains:
             response = requests.get(url, timeout=5)
             print(f"\n--- {url} ---")
             print(f"STATUS CODE : {response.status_code}")
+            
             try:
                 print("CONTENT (JSON):")
                 print(response.json())
@@ -39,7 +40,7 @@ with open(args.domain, "r") as domains:
                 print(response.text[:200]) 
                 
         except requests.exceptions.RequestException as e:
-            print(f"\n[!] Error conecting {url}: {e}")
-
-
+            print(f"\n[!] Error conectando a {url}: {e}")
+        
+      
 
