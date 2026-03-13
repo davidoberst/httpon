@@ -25,9 +25,9 @@ headers = {
 active_urls = []
 nonactive = []
 with open(args.domain, "r") as domains:
-    print("="*50)
+    print("="*75)
     print(f"{Fore.LIGHTBLUE_EX + "[INFO]" + Style.RESET_ALL + " Requesting domains..."}")
-    print("="*50)
+    print("="*75)
     for line in domains:
         url = line.strip()
         if not url: continue       
@@ -36,11 +36,11 @@ with open(args.domain, "r") as domains:
         try:
          response = requests.get(url, timeout=5, headers=headers)
          if response.ok:
-            active_urls.append(f"[:] {url} - {response.status_code}")
+            active_urls.append(f"[:] {url} -> [{response.status_code}]")
          else:
-            nonactive.append(f"[!] {url} - {response.status_code}")
+            nonactive.append(f"[!] {url} -> [{response.status_code}]")
         except:
-           nonactive.append(f"[!] {url} - FAILED/TIMEOUT")
+           nonactive.append(f"[!] {url} -> [404 - Failed Timeout]")
 
 #----results
 for x in active_urls:
@@ -49,7 +49,11 @@ for x in active_urls:
 for y in nonactive:
    print(Fore.RED + y + Style.RESET_ALL)
 
-print("="*50)
+print("="*75)
+for x in domains:
+   x += 1
+   print(f"[INFO] {x} domains scanned")
+   break
 
            
 
