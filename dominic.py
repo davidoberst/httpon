@@ -15,36 +15,29 @@ args = parser.parse_args()
 
 
 if not os.path.exists(args.domain):
-    print(f"[!] '{args.domain}' no fue encontrado.")
+    print(f"[!] '{args.domain}' not found.")
     exit()
-
+active_urls = []
+nonactive = []
 with open(args.domain, "r") as domains:
     print("="*50)
-    print("[:] Requesting domains...")
+    print("[INFO] Requesting domains...")
     print("="*50)
     for line in domains:
         url = line.strip()
-        if not url: continue 
-       
+        if not url: continue       
         if not url.startswith("http"):
             url = f"http://{url}"
-        
         try:
-            response = requests.get(url, timeout=5)
-            print(f"\n{url}")
-            print(f"STATUS CODE : {response.status_code}")
+         response = requests.get(url, timeout=5)
+         if response.ok:
+            active_urls.append(url)
+         else:
+            pass
+        except requests.exceptions.RequestException:
+           nonactive.append(url)
            
 
-            
-            try:
-                print("CONTENT (JSON):")
-                print(response.json())
-            except requests.exceptions.JSONDecodeError:
-                print("CONTENT (TEXT):")
-                print(response.text[:200]) 
-                
-        except requests.exceptions.RequestException as e:
-            print(f"\n[!] Error conectando a {url}: {e}")
+
         
-      
 
