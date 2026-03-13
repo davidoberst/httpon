@@ -31,11 +31,12 @@ with open(args.domain, "r") as domains:
         try:
          response = requests.get(url, timeout=5)
          if response.ok:
-            active_urls.append(url)
+            active_urls.append(f"{url} - {response.status_code}")
          else:
             pass
         except requests.exceptions.RequestException:
-           nonactive.append(url)
+           nonactive.append(f"{url} - {response.status_code}")
+        
            
 
 
